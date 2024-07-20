@@ -69,6 +69,7 @@
 	    <div id="divider"></div>
 	    <div id="prev" class="arrow">‹</div>
 	    <div id="viewer"></div>
+	    <span id="hiddenTitle"></span>
 	    <div id="next" class="arrow">›</div>
 	    <div id="progress">0%</div>
 	    <div id="loader"><img src="{{ url_for('static', filename='img/loader.gif') }}"></div>
@@ -122,6 +123,24 @@
     <script src="{{ url_for('static', filename='js/compress/jszip_epub.min.js') }}">
     </script>
     <script src="{{ url_for('static', filename='js/libs/epub.min.js') }}"></script>
+
+    <script type="text/javascript">
+	window.hypothesisConfig = function () {
+	    return {
+		openSidebar: false,
+		enableMultiFrameSupport: true,
+		onLayoutChange: function(state) {
+		    var main = document.querySelector('#main');
+		    if (state.expanded === true) {
+			main.classList.add("open");
+		    } else {
+			main.classList.remove("open");
+		    }
+		}
+	    };
+        };
+    </script>
+    <script src="https://cdn.hypothes.is/hypothesis"></script>
     <script type="text/javascript">
         window.calibre = {
             filePath: "{{ url_for('static', filename='js/libs/') }}",

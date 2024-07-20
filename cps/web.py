@@ -88,7 +88,7 @@ except ImportError:
 @app.after_request
 def add_security_headers(resp):
     default_src = ([host.strip() for host in config.config_trustedhosts.split(',') if host] +
-                   ["'self'", "'unsafe-inline'", "'unsafe-eval'"])
+                   ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.hypothes.is", "https://hypothes.is"])
     csp = "default-src " + ' '.join(default_src) + "; "
     csp += "font-src 'self' data:"
     if request.endpoint == "web.read_book":
@@ -100,7 +100,7 @@ def add_security_headers(resp):
     if request.endpoint == "edit-book.show_edit_book" or config.config_use_google_drive:
         csp += " *;"
     elif request.endpoint == "web.read_book":
-        csp += " blob:; style-src-elem 'self' blob: 'unsafe-inline';"
+        csp += " blob:; style-src-elem 'self' blob: 'unsafe-inline' https://cdn.hypothes.is ;"
     else:
         csp += ";"
     csp += " object-src 'none';"
